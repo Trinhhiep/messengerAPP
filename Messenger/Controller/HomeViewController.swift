@@ -8,20 +8,22 @@
 import UIKit
 
 class HomeViewController: UIViewController {
-
+   
     @IBOutlet weak var tableview: UITableView!
     override func viewDidLoad() {
         super.viewDidLoad()
+     
+        
         tableview.dataSource = self
         tableview.delegate = self
-//        let user = User("hiep123", "1", "hiep trinh", "0335322225")
-//        let user2 = User("TVD", "1", "To Vu Duong", "0335322226")
-//        let user3 = User("TQH", "1", "hiep trinh", "0335322227")
-//        FirebaseSingleton.instance.insertUser(user)
-//        FirebaseSingleton.instance.insertUser(user3)
-//        FirebaseSingleton.instance.insertUser(user2)
+        tableview.separatorStyle = .none
+        tableview.tableFooterView = UIView()
+        
+ }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.tabBarController?.tabBar.isHidden = false
     }
-
 }
 extension HomeViewController:UITableViewDataSource{
    
@@ -38,7 +40,7 @@ extension HomeViewController:UITableViewDataSource{
         }
         else if indexPath.row == 1{
             let userOnlineCell = tableview.dequeueReusableCell(withIdentifier: "USEROLINECELL") as! UserOnlineTableViewCell
-           
+            userOnlineCell.nav = self.navigationController
             return userOnlineCell
         }
         let conversationCell = tableview.dequeueReusableCell(withIdentifier: "CONVERSATIONCELL") as! ConversationTableViewCell
@@ -50,7 +52,9 @@ extension HomeViewController:UITableViewDataSource{
 extension HomeViewController: UITableViewDelegate{
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
             var height:CGFloat = CGFloat()
-            if indexPath.row == 1 {
+        if indexPath.row == 0 {
+            height = 60
+        }else if indexPath.row == 1 {
                 height = 150
             }
             else {

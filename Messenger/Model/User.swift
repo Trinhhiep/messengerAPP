@@ -6,7 +6,7 @@
 //
 
 import Foundation
-class User : Decodable {
+struct User : Codable {
     var username : String
     var password : String
     var displayName : String
@@ -14,38 +14,49 @@ class User : Decodable {
     var phoneNumber : String
     var friends : [String]
     var status : Bool
+    var listConversationId :  [String]
     
+   
+        init(_ username : String , _ password : String ,_ image: String, _ displayName : String, _ phoneNumber : String ) {
+            self.username = username
+            self.password = password
+            self.image = image
+            self.displayName = displayName
+            self.phoneNumber = phoneNumber
+            self.friends = []
+            self.status = true
+            self.listConversationId = []
+        }
+}
+struct InfoPublic : Decodable  {
+    var username: String
+    var displayName : String
+    var image : String
+    var status : Bool
+    var listConversationId :  [String]
     
-    enum UserKey : String, CodingKey{
-        case displayName = "displayName"
+    enum InfoPublicKey : String, CodingKey{
         case username = "username"
-        case password = "password"
-        
+        case displayName = "displayName"
         case image = "image"
-        case phoneNumber = "phoneNumber"
-        case friends = "friends"
         case status = "status"
+        case listConversationId = "listConversationId"
         
     }
     
-    required init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: UserKey.self)
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: InfoPublicKey.self)
+        username = try container.decode(String.self, forKey: .username)
         displayName = try container.decode(String.self, forKey: .displayName)
         image = try container.decode(String.self, forKey: .image)
-        phoneNumber = try container.decode(String.self, forKey: .phoneNumber)
-        friends = try container.decode([String].self, forKey: .friends)
         status = try container.decode(Bool.self, forKey: .status)
-        username = try container.decode(String.self, forKey: .username)
-        password = try container.decode(String.self, forKey: .password)
+        listConversationId = try container.decode([String].self, forKey: .listConversationId)
+        
     }
-    //    init(_ username : String , _ password : String ,_ image: String, _ displayName : String, _ phoneNumber : String ) {
-    //        self.username = username
-    //        self.password = password
-    //        self.image = image
-    //        self.displayName = displayName
-    //        self.phoneNumber = phoneNumber
-    //        self.friends = []
-    //        self.status = true
-    //
-    //    }
+//    func encode(from encoder:Encoder) throws {
+//        var container = encoder.container(keyedBy: InfoPublicKey.self)
+//        try container.encode(displayName, forKey: .displayName)
+//        try container.encode(image, forKey: .image)
+//        try container.encode(status, forKey: .status)
+//    }
 }

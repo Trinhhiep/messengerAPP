@@ -19,8 +19,9 @@ class UserOnlineCollectionViewCell: UICollectionViewCell {
     
     @IBAction func btnProfileClicked(_ sender: Any) {
     }
-    func updateUI(_ user : User) {
-        lblDisplayName.text = user.displayName
-        btnProfile.setBackgroundImage(UIImage(named: user.image  ), for: UIControl.State.normal)
+    
+    func updateUI(_ info : InfoPublic) {
+        lblDisplayName.text = info.displayName
+        btnProfile.addImageView(image: UIImage(named: info.image)!, status : info.status)
     }
 }

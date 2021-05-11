@@ -7,5 +7,5 @@ target 'Messenger' do
   # Pods for Messenger
 pod 'Firebase/Analytics'
 pod 'Firebase/Database'
-
+pod 'IQKeyboardManagerSwift'
 end

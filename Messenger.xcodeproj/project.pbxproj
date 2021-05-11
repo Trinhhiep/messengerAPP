@@ -25,6 +25,10 @@
 		840DB56426465C9E005FB225 /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 840DB56326465C9E005FB225 /* TabBarViewController.swift */; };
 		840DB5672646A66D005FB225 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 840DB5662646A66D005FB225 /* GoogleService-Info.plist */; };
 		845855F62646B03200BCC663 /* FirebaseSingleton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845855F52646B03200BCC663 /* FirebaseSingleton.swift */; };
+		845855FD2648EF3B00BCC663 /* Conversation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845855FC2648EF3B00BCC663 /* Conversation.swift */; };
+		84585600264903DC00BCC663 /* ConversationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845855FF264903DC00BCC663 /* ConversationViewController.swift */; };
+		845856032649084600BCC663 /* CustomLabelMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845856022649084600BCC663 /* CustomLabelMessage.swift */; };
+		84585606264A25A500BCC663 /* MessageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84585605264A25A500BCC663 /* MessageTableViewCell.swift */; };
 		8563A2E1564C65BFDFC93452 /* Pods_Messenger.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B7082D8AEF0A99E8305173C /* Pods_Messenger.framework */; };
 /* End PBXBuildFile section */
 
@@ -49,6 +53,10 @@
 		840DB56326465C9E005FB225 /* TabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
 		840DB5662646A66D005FB225 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		845855F52646B03200BCC663 /* FirebaseSingleton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseSingleton.swift; sourceTree = "<group>"; };
+		845855FC2648EF3B00BCC663 /* Conversation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Conversation.swift; sourceTree = "<group>"; };
+		845855FF264903DC00BCC663 /* ConversationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationViewController.swift; sourceTree = "<group>"; };
+		845856022649084600BCC663 /* CustomLabelMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomLabelMessage.swift; sourceTree = "<group>"; };
+		84585605264A25A500BCC663 /* MessageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageTableViewCell.swift; sourceTree = "<group>"; };
 		8B7082D8AEF0A99E8305173C /* Pods_Messenger.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Messenger.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BCD38BC5B8EEBF2CEB8DB750 /* Pods-Messenger.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Messenger.debug.xcconfig"; path = "Target Support Files/Pods-Messenger/Pods-Messenger.debug.xcconfig"; sourceTree = "<group>"; };
 		F4873906C6587046AB976AC2 /* Pods-Messenger.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Messenger.release.xcconfig"; path = "Target Support Files/Pods-Messenger/Pods-Messenger.release.xcconfig"; sourceTree = "<group>"; };
@@ -127,6 +135,7 @@
 				840DB55226463B2F005FB225 /* HomeViewController.swift */,
 				840DB56026465B1D005FB225 /* RegisterViewController.swift */,
 				840DB56326465C9E005FB225 /* TabBarViewController.swift */,
+				845855FF264903DC00BCC663 /* ConversationViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -134,11 +143,13 @@
 		840DB54C26461DEB005FB225 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				840DB53E26456929005FB225 /* ConversationTableViewCell.swift */,
-				840DB5422645699D005FB225 /* UserOnlineCollectionViewCell.swift */,
+				845856022649084600BCC663 /* CustomLabelMessage.swift */,
 				840DB54E26461E0A005FB225 /* CustomPersonalButton.swift */,
-				840DB555264642D4005FB225 /* SearchBarTableViewCell.swift */,
+				840DB5422645699D005FB225 /* UserOnlineCollectionViewCell.swift */,
 				840DB558264643D1005FB225 /* UserOnlineTableViewCell.swift */,
+				840DB555264642D4005FB225 /* SearchBarTableViewCell.swift */,
+				840DB53E26456929005FB225 /* ConversationTableViewCell.swift */,
+				84585605264A25A500BCC663 /* MessageTableViewCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -147,6 +158,7 @@
 			isa = PBXGroup;
 			children = (
 				840DB55C26464C93005FB225 /* User.swift */,
+				845855FC2648EF3B00BCC663 /* Conversation.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -277,12 +289,16 @@
 				840DB54F26461E0A005FB225 /* CustomPersonalButton.swift in Sources */,
 				840DB53726456397005FB225 /* FriendListViewController.swift in Sources */,
 				840DB5432645699D005FB225 /* UserOnlineCollectionViewCell.swift in Sources */,
+				845855FD2648EF3B00BCC663 /* Conversation.swift in Sources */,
 				840DB56126465B1D005FB225 /* RegisterViewController.swift in Sources */,
+				845856032649084600BCC663 /* CustomLabelMessage.swift in Sources */,
 				840DB559264643D1005FB225 /* UserOnlineTableViewCell.swift in Sources */,
 				840DB55326463B2F005FB225 /* HomeViewController.swift in Sources */,
 				840DB51B26455E44005FB225 /* AppDelegate.swift in Sources */,
 				840DB53F26456929005FB225 /* ConversationTableViewCell.swift in Sources */,
 				840DB556264642D4005FB225 /* SearchBarTableViewCell.swift in Sources */,
+				84585606264A25A500BCC663 /* MessageTableViewCell.swift in Sources */,
+				84585600264903DC00BCC663 /* ConversationViewController.swift in Sources */,
 				840DB51D26455E44005FB225 /* SceneDelegate.swift in Sources */,
 				840DB56426465C9E005FB225 /* TabBarViewController.swift in Sources */,
 				840DB52526455E45005FB225 /* Messenger.xcdatamodeld in Sources */,
