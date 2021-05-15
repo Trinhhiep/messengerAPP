@@ -207,26 +207,17 @@
                                                         <constraint firstAttribute="width" constant="60" id="bhg-uz-ywT"/>
                                                     </constraints>
                                                 </button>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="10 : 00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Sje-mZ-Xcb">
-                                                    <rect key="frame" x="305" y="41.5" width="60" height="19.5"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="width" constant="60" id="7ah-60-HKG"/>
-                                                    </constraints>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                                    <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="8w5-CV-IvT">
-                                                    <rect key="frame" x="85" y="15" width="210" height="46"/>
+                                                    <rect key="frame" x="85" y="15" width="190" height="46"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="bottom" semanticContentAttribute="forceLeftToRight" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tô Vũ Dương" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" highlighted="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bEC-w6-Chj">
-                                                            <rect key="frame" x="0.0" y="0.0" width="210" height="23"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="190" height="23"/>
                                                             <fontDescription key="fontDescription" type="system" weight="medium" pointSize="18"/>
                                                             <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Lol Duong này :))" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lc0-4M-F6y">
-                                                            <rect key="frame" x="0.0" y="23" width="210" height="23"/>
+                                                            <rect key="frame" x="0.0" y="23" width="190" height="23"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                             <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <nil key="highlightedColor"/>
@@ -239,20 +230,35 @@
                                                         <constraint firstAttribute="trailing" secondItem="bEC-w6-Chj" secondAttribute="trailing" id="oES-ZO-zNz"/>
                                                     </constraints>
                                                 </stackView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yV9-PY-a74">
+                                                    <rect key="frame" x="285" y="46.5" width="80" height="14.5"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="80" id="jVY-k7-PUI"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                    <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstAttribute="trailing" secondItem="Sje-mZ-Xcb" secondAttribute="trailing" constant="10" id="Ax0-R0-JoN"/>
+                                                <constraint firstAttribute="bottom" secondItem="yV9-PY-a74" secondAttribute="bottom" constant="15" id="Klr-89-xoO"/>
                                                 <constraint firstAttribute="bottom" secondItem="8w5-CV-IvT" secondAttribute="bottom" constant="15" id="Qht-RN-qR8"/>
                                                 <constraint firstItem="8w5-CV-IvT" firstAttribute="leading" secondItem="OCu-Vc-FEw" secondAttribute="trailing" constant="15" id="RKQ-dD-6Ms"/>
+                                                <constraint firstAttribute="trailing" secondItem="yV9-PY-a74" secondAttribute="trailing" constant="10" id="cTe-7o-G9p"/>
+                                                <constraint firstItem="yV9-PY-a74" firstAttribute="leading" secondItem="8w5-CV-IvT" secondAttribute="trailing" constant="10" id="dyA-5S-zS0"/>
                                                 <constraint firstItem="OCu-Vc-FEw" firstAttribute="leading" secondItem="Le8-gC-x2W" secondAttribute="leading" constant="10" id="eJU-WA-eyj"/>
-                                                <constraint firstAttribute="bottom" secondItem="Sje-mZ-Xcb" secondAttribute="bottom" constant="15" id="eKx-H4-RF3"/>
                                                 <constraint firstItem="8w5-CV-IvT" firstAttribute="top" secondItem="Le8-gC-x2W" secondAttribute="top" constant="15" id="hmA-6k-cPG"/>
-                                                <constraint firstItem="Sje-mZ-Xcb" firstAttribute="leading" secondItem="8w5-CV-IvT" secondAttribute="trailing" constant="10" id="j3c-7f-lo9"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <constraints>
                                             <constraint firstItem="OCu-Vc-FEw" firstAttribute="centerY" secondItem="vK7-mb-e6L" secondAttribute="centerY" id="8Yo-s9-X6h"/>
                                         </constraints>
+                                        <connections>
+                                            <outlet property="btnProfile" destination="OCu-Vc-FEw" id="0aV-aV-UNc"/>
+                                            <outlet property="lblDisplayName" destination="bEC-w6-Chj" id="tcR-XJ-ii5"/>
+                                            <outlet property="lblLastMessage" destination="lc0-4M-F6y" id="IVr-ED-XCr"/>
+                                            <outlet property="lblTime" destination="yV9-PY-a74" id="9Pr-on-aTr"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                                 <sections/>

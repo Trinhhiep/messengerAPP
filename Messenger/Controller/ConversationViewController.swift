@@ -9,9 +9,14 @@ import UIKit
 
 class ConversationViewController : UIViewController {
     fileprivate let cellId = "MESSAGECELL"
-  let host = "TQH"
+    let host = User("TQH", "1", "image-3", "Trinh Hiep", "099863234")
+ 
+    
+    var client : String?
+    
     @IBOutlet weak var txtfInput: UITextField!
-    let messages: [ChatMessage] = [ChatMessage(message: "Cuốn sách Nhà Giả Kim của Paulo Coelho là cuốn sách rất hay mà mình từng đọc.", sender: "TVD"),ChatMessage(message: "Nội dung cuốn sách xoay quanh câu chuyện cậu bé chăn cừu Santiago và cuộc hành trình đi tìm kho báu của cậu.", sender: "TQH"),ChatMessage(message: "Cuộc hành trình đó đã dạy cho cậu rất nhiều bài học về cuộc sống.", sender: "TVD"),ChatMessage(message: "ok.", sender: "TVD"),ChatMessage(message: "Giúp cho cậu nhận ra được mục đích và ý nghĩa của cuộc đời mình.", sender: "TQH"),ChatMessage(message: "Cuộc hành trình đó đã dạy cho cậu rất nhiều bài học về cuộc sống.", sender: "TVD"),ChatMessage(message: "ok.", sender: "TVD"),ChatMessage(message: "Giúp cho cậu nhận ra được mục đích và ý nghĩa của cuộc đời mình.", sender: "TQH")]
+    var existConversationId = ""
+    var messages : [ChatMessage] = []
    
     @IBOutlet weak var tableView: UITableView!
     
@@ -24,48 +29,99 @@ class ConversationViewController : UIViewController {
         tableView.allowsSelection = false
         tableView.backgroundColor = #colorLiteral(red: 0.9288164119, green: 0.9288164119, blue: 0.9288164119, alpha: 1)
         tableView.register(MessageTableViewCell.self, forCellReuseIdentifier: cellId)
-        //check room is exist ?
-        
-        // insert room
-
+ 
 }
-    func insertNewConversation(usernameClient : String)  {
-        let path = "users/"+usernameClient+"/listConversationId"
-        var isExistConversation = ""
-        FirebaseSingleton.instance?.fetchData(path: path, comletionHandler: { (data : [String]? , error : Error?) in
-            for i in data!{
-                if i.contains(self.host){
-                    isExistConversation = i
-                    return
-                }
-            }
-
-
-            if isExistConversation == ""{
-
-                let conversation = Conversation(self.host, usernameClient)
-
-                FirebaseSingleton.instance?.insertConversation(conversation)
-
-            }
-            else{
-                // lay data chat 
-            }
-
-        })
-    }
-    
-    @IBAction func btnSend(_ sender: Any) {
-        
-    }
     override func viewWillAppear(_ animated: Bool) {
         self.tabBarController?.tabBar.isHidden = true
-    }
-    func setUp(info : InfoPublic)  {
-        navigationItem.title = info.displayName
         
-        insertNewConversation(usernameClient: info.username)
+//       
+        
     }
+    
+    func setUp(clientUsername: String,  conversationId : String)  {
+        self.client = clientUsername
+        
+        let path = "INFOPUBLIC/"+clientUsername+"/listConversation"
+        FirebaseSingleton.instance?.fetchOne(path: path, completionHandler: { [self](data : [String]? , error : Error?)in
+            guard let data = data else{
+                return
+            }
+            for i in data{
+                if i.contains(self.host.username) == true{
+                                   existConversationId = i
+                               }
+            }
+            if existConversationId == ""{
+                            let con = Conversation(host.username, client!)
+                            existConversationId = host.username + client!
+                            FirebaseSingleton.instance?.insertConversation(conversation: con  )
+                        }
+            else{
+                           FirebaseSingleton.instance?.fetchOne(path: "conversations/"+existConversationId+"/listMessage", completionHandler: { [self](data : [ChatMessage]?,err : Error? ) in
+                               DispatchQueue.main.async {
+                                   guard let data = data else{
+                                       return
+                                   }
+           
+                                   self.messages = data
+                                   self.tableView.reloadData()
+                               }
+                           })
+           
+                       }
+        })
+//        DatabaseSupport.getUserById(id: clientUsername, completion: { [self](data : InfoPublic?) in
+//            guard let data = data else {
+//                return
+//            }
+//            for i in data.listConversationId{
+//                if i.contains(self.host.username) == true{
+//                    self.existConversationId = i
+//
+//                }
+//            }
+//            if self.existConversationId == ""{
+//                let con = Conversation(host.username, client!)
+//                self.existConversationId = host.username + client!
+//                FirebaseSingleton.instance?.insertConversation(conversation: con  )
+//            }
+//            else{
+//                FirebaseSingleton.instance?.fetchOne(path: "messages/"+existConversationId, completionHandler: { [self](data : [ChatMessage]?,err : Error? ) in
+//                    DispatchQueue.main.async {
+//                        guard let data = data else{
+//                            return
+//                        }
+//
+//                        self.messages = data
+//                        self.tableView.reloadData()
+//                    }
+//                })
+//
+//            }
+//
+//        })
+
+    }
+
+    
+    
+    @IBAction func btnSend(_ sender: Any) {
+        let message = txtfInput.text!
+        guard message != "" else {
+            return
+        }
+        let sender = self.host.username
+        let chatMessage = ChatMessage(message: message, sender: sender)
+        FirebaseSingleton.instance?.insertMessage(message: chatMessage, id: existConversationId)
+        // update last message
+        FirebaseSingleton.instance?.updateUserLastMessage(message: chatMessage, id: existConversationId)
+        txtfInput.text = ""
+        tableView.reloadData()
+        
+    }
+    
+  
+    
 
 }
 
@@ -74,6 +130,7 @@ extension ConversationViewController : UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return messages.count
+        
         
     }
     
@@ -85,3 +142,8 @@ extension ConversationViewController : UITableViewDataSource{
     }
     
 }
+//public extension String {
+//  func indexInt(of char: Character) -> Int? {
+//    return firstIndex(of: char)?.utf16Offset(in: self)
+//  }
+//}

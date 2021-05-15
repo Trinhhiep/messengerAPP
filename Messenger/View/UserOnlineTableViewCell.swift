@@ -8,6 +8,8 @@
 import UIKit
 
 class UserOnlineTableViewCell: UITableViewCell {
+    
+    let host = User("TQH", "1", "image-3", "Trinh Hiep", "099863234")
     var infos : [InfoPublic]?
     var navClosure : ((UIViewController)-> Void)?
     var nav : UINavigationController?
@@ -18,33 +20,24 @@ class UserOnlineTableViewCell: UITableViewCell {
         super.awakeFromNib()
         collection.dataSource = self
         collection.delegate = self
-        
-   
-        FirebaseSingleton.instance?.fetchData(path: "users", comletionHandler: { [weak self] (data : [InfoPublic]? , error : Error?) in
+        FirebaseSingleton.instance?.fetchAll(path: "INFOPUBLIC", completionHandler: {(data : [InfoPublic]? , err : Error?) in
             DispatchQueue.main.async {
                 guard let data = data else{
-                    print("data nil ma ab")
+                    print (false)
                     return
                 }
-            self!.infos = data.filter{ (item ) -> Bool in
-                
-                    return item.status == true
-                }
-            self!.collection.reloadData()
-                
-           }
+                self.infos = data.filter({(item : InfoPublic) in
+                    return item.status == true && item.username != self.host.username
+                })
+                self.collection.reloadData()
+               
+            }
             
         })
-    }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        }
-    
+       
+   
         
- 
-    
+    }
 
 }
 extension UserOnlineTableViewCell : UICollectionViewDataSource{
@@ -67,9 +60,9 @@ extension UserOnlineTableViewCell: UICollectionViewDelegate{
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let sb = UIStoryboard(name: "Main", bundle: nil)
         let conversationViewController = sb.instantiateViewController(identifier: "CONVERSATION") as! ConversationViewController
-        conversationViewController.setUp(info: infos![indexPath.row])
-        //check room is exist ?
-        // insert room
+        let client = infos![indexPath.row]
+        let id = host.username+client.username
+        conversationViewController.setUp(clientUsername: client.username, conversationId: id)
        nav?.pushViewController(conversationViewController, animated: true)
 
     }
