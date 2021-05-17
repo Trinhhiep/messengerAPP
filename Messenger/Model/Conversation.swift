@@ -25,7 +25,7 @@ struct Conversation : Codable , Dictionable {
         self.user1 = user1
         self.user2 = user2
         self.status = true
-        self.listMessage = []
+        self.listMessage = [ChatMessage(message: "", sender: user1)]
     }
     
 //    enum ConversationKey : String, CodingKey{
@@ -69,6 +69,7 @@ struct ChatMessage : Codable , Dictionable{
     private func getCurrentTime() -> String{
       return "1/1/2021 00:00"
     }
+    
 //    enum MessageKey : String, CodingKey {
 //        case sender = "sender"
 //        case message = "message"

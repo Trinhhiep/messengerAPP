@@ -22,8 +22,6 @@ struct User : Codable , Dictionable{
         return dic
     }
     
-   
-    
     var username : String
     var password : String
     var displayName : String
@@ -33,10 +31,10 @@ struct User : Codable , Dictionable{
     
     
    
-        init(_ username : String , _ password : String ,_ image: String, _ displayName : String, _ phoneNumber : String ) {
+        init(_ username : String , _ password : String, _ displayName : String, _ phoneNumber : String ) {
             self.username = username
             self.password = password
-            self.image = image
+            self.image = "imagePlaceHolder"
             self.displayName = displayName
             self.phoneNumber = phoneNumber
             self.status = true
@@ -59,9 +57,9 @@ struct InfoPublic : Codable , Dictionable {
     var status : Bool
     var listConversation :  [String]
     
-    init(_ username : String , _ image: String, _ displayName : String, _ phoneNumber : String ) {
+    init(_ username : String ,  _ displayName : String, _ phoneNumber : String ) {
         self.username = username
-        self.image = image
+        self.image = "imagePlaceHolder"
         self.displayName = displayName
         self.status = true
         self.listConversation = [""]

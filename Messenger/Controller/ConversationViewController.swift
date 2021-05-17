@@ -9,100 +9,104 @@ import UIKit
 
 class ConversationViewController : UIViewController {
     fileprivate let cellId = "MESSAGECELL"
-    let host = User("TQH", "1", "image-3", "Trinh Hiep", "099863234")
- 
-    
+    var host : String?
     var client : String?
     
     @IBOutlet weak var txtfInput: UITextField!
     var existConversationId = ""
     var messages : [ChatMessage] = []
-   
+    
     @IBOutlet weak var tableView: UITableView!
     
-
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        let defaults = UserDefaults.standard
+        self.host = defaults.string(forKey: "username")
+        
         tableView.dataSource = self
         tableView.separatorStyle = .none
         tableView.allowsSelection = false
         tableView.backgroundColor = #colorLiteral(red: 0.9288164119, green: 0.9288164119, blue: 0.9288164119, alpha: 1)
         tableView.register(MessageTableViewCell.self, forCellReuseIdentifier: cellId)
- 
-}
+       
+        
+    }
+    func setUpTittle()  {
+        guard let username = self.client else {
+            return
+        }
+        let pathDisplayName = "INFOPUBLIC/"+username
+                        FirebaseSingleton.instance?.fetchOne(path: pathDisplayName, completionHandler: {(data : InfoPublic? , error : Error?) in
+                            guard let data = data else{
+                                return
+                            }
+                            self.title = data.displayName
+                           
+                        })
+    }
     override func viewWillAppear(_ animated: Bool) {
         self.tabBarController?.tabBar.isHidden = true
         
-//       
-        
     }
     
-    func setUp(clientUsername: String,  conversationId : String)  {
+    func setUpConversation(hostUsername : String ,clientUsername: String,  conversationId : String)  {
         self.client = clientUsername
-        
+       
         let path = "INFOPUBLIC/"+clientUsername+"/listConversation"
         FirebaseSingleton.instance?.fetchOne(path: path, completionHandler: { [self](data : [String]? , error : Error?)in
             guard let data = data else{
                 return
             }
             for i in data{
-                if i.contains(self.host.username) == true{
-                                   existConversationId = i
-                               }
+                if i.contains(hostUsername) == true{
+                    existConversationId = i
+                }
             }
             if existConversationId == ""{
-                            let con = Conversation(host.username, client!)
-                            existConversationId = host.username + client!
-                            FirebaseSingleton.instance?.insertConversation(conversation: con  )
-                        }
+                let con = Conversation(hostUsername, clientUsername)
+                existConversationId = hostUsername + clientUsername
+                FirebaseSingleton.instance?.insertConversation(conversation: con  )
+            }
             else{
-                           FirebaseSingleton.instance?.fetchOne(path: "conversations/"+existConversationId+"/listMessage", completionHandler: { [self](data : [ChatMessage]?,err : Error? ) in
-                               DispatchQueue.main.async {
-                                   guard let data = data else{
-                                       return
-                                   }
-           
-                                   self.messages = data
-                                   self.tableView.reloadData()
-                               }
-                           })
-           
-                       }
+                FirebaseSingleton.instance?.fetchOne(path: "conversations/"+existConversationId+"/listMessage", completionHandler: { [self](data : [ChatMessage]?,err : Error? ) in
+                    DispatchQueue.main.async {
+                        guard let data = data else{
+                            return
+                        }
+                        
+                        self.messages = data.filter({
+                            return $0.message != ""
+                        })
+                        self.tableView.reloadData()
+                    }
+                })
+                
+            }
         })
-//        DatabaseSupport.getUserById(id: clientUsername, completion: { [self](data : InfoPublic?) in
-//            guard let data = data else {
-//                return
-//            }
-//            for i in data.listConversationId{
-//                if i.contains(self.host.username) == true{
-//                    self.existConversationId = i
-//
-//                }
-//            }
-//            if self.existConversationId == ""{
-//                let con = Conversation(host.username, client!)
-//                self.existConversationId = host.username + client!
-//                FirebaseSingleton.instance?.insertConversation(conversation: con  )
-//            }
-//            else{
-//                FirebaseSingleton.instance?.fetchOne(path: "messages/"+existConversationId, completionHandler: { [self](data : [ChatMessage]?,err : Error? ) in
-//                    DispatchQueue.main.async {
-//                        guard let data = data else{
-//                            return
-//                        }
-//
-//                        self.messages = data
-//                        self.tableView.reloadData()
-//                    }
-//                })
-//
-//            }
-//
-//        })
-
+        setUpTittle()
     }
-
+    func loadExistConversation(conversationId : String){
+        self.existConversationId = conversationId
+        FirebaseSingleton.instance?.fetchOne(path: "conversations/"+conversationId, completionHandler: { [self](data : Conversation?,err : Error? ) in
+            DispatchQueue.main.async {
+                guard let data = data else{
+                    return
+                }
+                
+                self.messages = data.listMessage!.filter({
+                    return $0.message != ""
+                })
+                self.client = host! == data.user1 ? data.user2 : data.user1
+                self.tableView.reloadData()
+                setUpTittle()
+            }
+        })
+       
+        
+    }
     
     
     @IBAction func btnSend(_ sender: Any) {
@@ -110,19 +114,18 @@ class ConversationViewController : UIViewController {
         guard message != "" else {
             return
         }
-        let sender = self.host.username
+        let sender = self.host!
         let chatMessage = ChatMessage(message: message, sender: sender)
         FirebaseSingleton.instance?.insertMessage(message: chatMessage, id: existConversationId)
         // update last message
-        FirebaseSingleton.instance?.updateUserLastMessage(message: chatMessage, id: existConversationId)
         txtfInput.text = ""
         tableView.reloadData()
         
     }
     
-  
     
-
+    
+    
 }
 
 extension ConversationViewController : UITableViewDataSource{
@@ -142,8 +145,4 @@ extension ConversationViewController : UITableViewDataSource{
     }
     
 }
-//public extension String {
-//  func indexInt(of char: Character) -> Int? {
-//    return firstIndex(of: char)?.utf16Offset(in: self)
-//  }
-//}
+

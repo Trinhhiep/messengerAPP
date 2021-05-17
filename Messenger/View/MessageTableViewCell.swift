@@ -8,7 +8,8 @@
 import UIKit
 
 class MessageTableViewCell: UITableViewCell {
-    let host : String = "TQH"// username of host
+    
+    var host : String?
     let messageLable = UILabel()
     let bubbleBackgroundView = UIView()
     var leadingConstrain : NSLayoutConstraint!
@@ -43,6 +44,9 @@ class MessageTableViewCell: UITableViewCell {
         
     }
     func setUp(){
+        let defaults = UserDefaults.standard
+        self.host = defaults.string(forKey: "username")
+        
         self.backgroundColor = #colorLiteral(red: 0.9288164119, green: 0.9288164119, blue: 0.9288164119, alpha: 1)
         addSubview(bubbleBackgroundView)
         

@@ -8,70 +8,60 @@
 import UIKit
 
 class HomeViewController: UIViewController {
-    let host = User("TQH", "1", "image-3", "Trinh Hiep", "099863234")
-//    var conversations : [Conversation]?
+   
+    var username : String?
     var listConversationId : [String]?
+    
     @IBOutlet weak var tableview: UITableView!
    
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        let defaults = UserDefaults.standard
+        self.username = defaults.string(forKey: "username")
+        
+        
         tableview.dataSource = self
         tableview.delegate = self
-       
-//        setUp()
+        tableview.separatorStyle = .none
+        tableview.tableFooterView = UIView()
         
-        
-        let path = "INFOPUBLIC/"+host.username+"/listConversation"
-        
-        FirebaseSingleton.instance?.fetchOne(path: path, completionHandler: {(data : [String]? , err : Error?) in
+        let path = "INFOPUBLIC/"+self.username!
+        FirebaseSingleton.instance?.fetchOne(path: path, completionHandler: {(data : InfoPublic? , err : Error?) in
             DispatchQueue.main.async {
                 guard let data = data else{
                     print (false)
                     return
                 }
-                self.listConversationId = data.filter({
+                self.listConversationId = data.listConversation.filter({
                     return $0 != ""
                 })
-                print(self.listConversationId!)
+                
                 self.tableview.reloadData()
             }
             
           
         })
-//        let u = User("TQH", "1", "image-1", "Trinh Hiep", "23786429380")
-//        let u1 = User("TVD", "1", "image-2", "To Vu Duong", "23786429380")
-//        let u2 = User("LAH", "1", "image-3", "Le Anh Hoa", "23786429380")
-//        FirebaseSingleton.instance?.insertUser(user: u)
-//        FirebaseSingleton.instance?.insertUser(user: u1)
-//        FirebaseSingleton.instance?.insertUser(user: u2)
-
-//        var c = Conversation("TQH", "LAH")
-//        let chat = ChatMessage(message: "alo", sender: "TQH")
-//
-//        let chat2 = ChatMessage(message: "aloooo", sender: "TQH")
-//        c.listMessage?.append(chat)
-//        c.listMessage?.append(chat2)
-//
-//        FirebaseSingleton.instance?.insertConversation(conversation: c)
         
-
-//        FirebaseSingleton.instance?.fetchData(path: "listConversation/TQHLAH", completionHandler: {(data : Conversation? , err: Error?)in
-//            guard let data = data else{
-//                print(false)
-//                return
+//        let path = "INFOPUBLIC/"+self.username!+"/listConversation"
+//
+//        FirebaseSingleton.instance?.fetchOne(path: path, completionHandler: {(data : [String]? , err : Error?) in
+//            DispatchQueue.main.async {
+//                guard let data = data else{
+//                    print (false)
+//                    return
+//                }
+//                self.listConversationId = data.filter({
+//                    return $0 != ""
+//                })
+//
+//                self.tableview.reloadData()
 //            }
-//            print(data.user1)
+//
+//
 //        })
-//        FirebaseSingleton.instance?.fetchData(path: "INFOPUBLIC/TQH", completionHandler: {(data : InfoPublic? , err: Error?)in
-//            guard let data = data else{
-//                print(false)
-//                return
-//            }
-//            print(data.displayName)
-//        })
-        tableview.separatorStyle = .none
-        tableview.tableFooterView = UIView()
+        
+       
     }
     
     
@@ -90,12 +80,12 @@ class HomeViewController: UIViewController {
 extension HomeViewController:UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
-        return  listConversationId?.count ?? 0 + 2
-        
+       let count = listConversationId?.count ?? 0
+        return  count + 2
         }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
         if indexPath.row == 0{
             let searchBarCell = tableview.dequeueReusableCell(withIdentifier: "SEARCHBARCELL") as! SearchBarTableViewCell
             return searchBarCell
@@ -105,14 +95,17 @@ extension HomeViewController:UITableViewDataSource{
             userOnlineCell.nav = self.navigationController
             return userOnlineCell
         }
-        let conversationCell = tableview.dequeueReusableCell(withIdentifier: "CONVERSATIONCELL") as! ConversationTableViewCell
-        conversationCell.setUp(conversationId: listConversationId![indexPath.row - 2])
-        print("============")
-        print(listConversationId![indexPath.row - 2])
-        return conversationCell
+        else{
+            
+            let conversationCell = tableview.dequeueReusableCell(withIdentifier: "CONVERSATIONCELL") as! ConversationTableViewCell
+            
+           
+            conversationCell.setUp(conversationId: (listConversationId?[indexPath.row - 2])!)
+            
+            return conversationCell
+        }
+       
     }
-    
-    
 }
 extension HomeViewController: UITableViewDelegate{
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -128,16 +121,12 @@ extension HomeViewController: UITableViewDelegate{
         return height
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
         let sb = UIStoryboard(name: "Main", bundle: nil)
         let conversationViewController = sb.instantiateViewController(identifier: "CONVERSATION") as! ConversationViewController
         
-//        let conversation = conversations![indexPath.row-2]
-//
-//        let client = host.username == conversation.user1 ? conversation.user2 : conversation.user1
-//        let id = host.username + client
-//
-//        conversationViewController.setUp(clientUsername: client ,  conversationId: id)
-//
+        conversationViewController.loadExistConversation(conversationId: (listConversationId?[indexPath.row - 2])!)
+
                 
         
         self.navigationController!.pushViewController(conversationViewController, animated: true)
