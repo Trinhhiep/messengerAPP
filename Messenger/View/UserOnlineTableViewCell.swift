@@ -10,8 +10,8 @@ import UIKit
 class UserOnlineTableViewCell: UITableViewCell {
     
     var host : String?
+    var textSearch : String?
     var infos : [InfoPublic]?
-    var navClosure : ((UIViewController)-> Void)?
     var nav : UINavigationController?
     @IBOutlet weak var collection: UICollectionView!
     
@@ -19,24 +19,20 @@ class UserOnlineTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        let defaults = UserDefaults.standard
-        self.host = defaults.string(forKey: "username")
-        
         collection.dataSource = self
         collection.delegate = self
-        FirebaseSingleton.instance?.fetchAll(path: "INFOPUBLIC", completionHandler: {(data : [InfoPublic]? , err : Error?) in
-            DispatchQueue.main.async {
-                guard let data = data else{
-                    print (false)
-                    return
-                }
-                self.infos = data.filter({(item : InfoPublic) in
-                    return item.status == true && item.username != self.host
-                })
-                self.collection.reloadData()
-            }
-        })
-    }}
+        
+        let defaults = UserDefaults.standard
+        self.host = defaults.string(forKey: "username")
+    
+       
+    }
+    func setUpCollection(infos : [InfoPublic]) {
+        self.infos = infos
+        self.collection.reloadData()
+    }
+}
+
 extension UserOnlineTableViewCell : UICollectionViewDataSource{
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         

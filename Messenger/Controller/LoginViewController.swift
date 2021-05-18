@@ -41,7 +41,6 @@ class LoginViewController: UIViewController {
             guard let data = data else {
                 self.lblError.textColor = #colorLiteral(red: 0.9372549057, green: 0.3490196168, blue: 0.1921568662, alpha: 1)
                 self.lblError.text = "Username or password is wrong!"
-                print("login failure")
                 return
             }
             if data.username == username && data.password == password{
@@ -58,13 +57,7 @@ class LoginViewController: UIViewController {
                 
                 print("login successs")
                 
-//                let path1 = "INFOPUBLIC/"+username
-//                FirebaseSingleton.instance?.fetchOneSingleEvent(path: path1, completionHandler: {(data : InfoPublic? , error : Error?)in
-//                    guard let data = data else{
-//                        return
-//                    }
-//                    LoginViewController.infoPublic = data
-//                })
+
 
             }
             

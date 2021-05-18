@@ -8,6 +8,7 @@
 import UIKit
 
 class ConversationTableViewCell: UITableViewCell {
+  
     var host : String?
     @IBOutlet weak var lblTime: UILabel!
     @IBOutlet weak var lblDisplayName: UILabel!
@@ -21,6 +22,9 @@ class ConversationTableViewCell: UITableViewCell {
         // Initialization code
     }
     func setUp(conversationId : String){
+        
+        
+       
         let path1 = "conversations/"+conversationId
         FirebaseSingleton.instance?.fetchOne(path: path1, completionHandler: { [self](data : Conversation? , error : Error?) in
             guard let data = data else{
@@ -56,4 +60,8 @@ extension Array {
     var last: Element{
         return self[self.endIndex - 1]
     }
+}
+protocol mySearchText {
+    func recieveText()-> String?
+    
 }

@@ -30,6 +30,8 @@
 		84585606264A25A500BCC663 /* MessageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84585605264A25A500BCC663 /* MessageTableViewCell.swift */; };
 		845856402651105700BCC663 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8458563F2651105600BCC663 /* LoginViewController.swift */; };
 		8458564B2651359800BCC663 /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8458564A2651359700BCC663 /* TabBarViewController.swift */; };
+		84BB2CB22653B18100FBAF0B /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84BB2CB12653B18100FBAF0B /* ProfileViewController.swift */; };
+		84BB2CB52653BBE800FBAF0B /* ChangePassViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84BB2CB42653BBE800FBAF0B /* ChangePassViewController.swift */; };
 		8563A2E1564C65BFDFC93452 /* Pods_Messenger.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B7082D8AEF0A99E8305173C /* Pods_Messenger.framework */; };
 /* End PBXBuildFile section */
 
@@ -59,6 +61,8 @@
 		84585605264A25A500BCC663 /* MessageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageTableViewCell.swift; sourceTree = "<group>"; };
 		8458563F2651105600BCC663 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		8458564A2651359700BCC663 /* TabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
+		84BB2CB12653B18100FBAF0B /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		84BB2CB42653BBE800FBAF0B /* ChangePassViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePassViewController.swift; sourceTree = "<group>"; };
 		8B7082D8AEF0A99E8305173C /* Pods_Messenger.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Messenger.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BCD38BC5B8EEBF2CEB8DB750 /* Pods-Messenger.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Messenger.debug.xcconfig"; path = "Target Support Files/Pods-Messenger/Pods-Messenger.debug.xcconfig"; sourceTree = "<group>"; };
 		F4873906C6587046AB976AC2 /* Pods-Messenger.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Messenger.release.xcconfig"; path = "Target Support Files/Pods-Messenger/Pods-Messenger.release.xcconfig"; sourceTree = "<group>"; };
@@ -139,6 +143,8 @@
 				845855FF264903DC00BCC663 /* ConversationViewController.swift */,
 				8458563F2651105600BCC663 /* LoginViewController.swift */,
 				8458564A2651359700BCC663 /* TabBarViewController.swift */,
+				84BB2CB12653B18100FBAF0B /* ProfileViewController.swift */,
+				84BB2CB42653BBE800FBAF0B /* ChangePassViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -291,6 +297,8 @@
 			files = (
 				845856402651105700BCC663 /* LoginViewController.swift in Sources */,
 				840DB54F26461E0A005FB225 /* CustomPersonalButton.swift in Sources */,
+				84BB2CB22653B18100FBAF0B /* ProfileViewController.swift in Sources */,
+				84BB2CB52653BBE800FBAF0B /* ChangePassViewController.swift in Sources */,
 				840DB53726456397005FB225 /* FriendListViewController.swift in Sources */,
 				840DB5432645699D005FB225 /* UserOnlineCollectionViewCell.swift in Sources */,
 				845855FD2648EF3B00BCC663 /* Conversation.swift in Sources */,

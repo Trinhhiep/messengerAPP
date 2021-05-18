@@ -94,7 +94,10 @@ class FirebaseSingleton {
         })   
     }
     
-    
+    func  changePassword(username : String ,pass : String) {
+        let path = "private/"+username+"/password"
+        self.ref.child(path).setValue(pass)
+    }
   
    
     
